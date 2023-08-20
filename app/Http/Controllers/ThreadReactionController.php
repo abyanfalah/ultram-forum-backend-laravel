@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePostTagRequest;
-use App\Http\Requests\UpdatePostTagRequest;
-use App\Models\PostTag;
+use App\Http\Requests\StoreThreadReactionRequest;
+use App\Http\Requests\UpdateThreadReactionRequest;
+use App\Models\ThreadReaction;
 
-class PostTagController extends Controller
+class ThreadReactionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class PostTagController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostTagRequest $request)
+    public function store(StoreThreadReactionRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class PostTagController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PostTag $postTag)
+    public function show(ThreadReaction $threadReaction)
     {
         //
     }
@@ -43,7 +43,7 @@ class PostTagController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PostTag $postTag)
+    public function edit(ThreadReaction $threadReaction)
     {
         //
     }
@@ -51,7 +51,7 @@ class PostTagController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostTagRequest $request, PostTag $postTag)
+    public function update(UpdateThreadReactionRequest $request, ThreadReaction $threadReaction)
     {
         //
     }
@@ -59,7 +59,7 @@ class PostTagController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PostTag $postTag)
+    public function destroy(ThreadReaction $threadReaction)
     {
         //
     }

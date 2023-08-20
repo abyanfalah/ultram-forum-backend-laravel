@@ -32,6 +32,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+
         $post = new Post;
         $post->thread_id = $request->threadId;
         $post->parent_post_id = $request->parentPostId;

@@ -17,9 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('parent_post_id')->nullable();
             $table->text('content');
-            $table->timestamp('edit_date')->nullable();
-            $table->integer('likes')->default(0);
-            $table->integer('dislikes')->default(0);
+            // $table->integer('likes')->default(0);
+            // $table->integer('dislikes')->default(0);
             $table->timestamps();
 
             $table->foreign('thread_id')->references('id')->on('threads');
