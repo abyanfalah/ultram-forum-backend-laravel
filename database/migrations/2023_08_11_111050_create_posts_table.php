@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.d
+     * Run the migrations.
      */
     public function up(): void
     {
@@ -17,9 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('parent_post_id')->nullable();
             $table->text('content');
-            $table->timestamp('creation_date')->default(now());
             $table->timestamp('edit_date')->nullable();
-            $table->unsignedBigInteger('edit_user_id')->nullable();
             $table->integer('likes')->default(0);
             $table->integer('dislikes')->default(0);
             $table->timestamps();
@@ -27,7 +25,6 @@ return new class extends Migration
             $table->foreign('thread_id')->references('id')->on('threads');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('parent_post_id')->references('id')->on('posts');
-            $table->foreign('edit_user_id')->references('id')->on('users');
         });
     }
 
