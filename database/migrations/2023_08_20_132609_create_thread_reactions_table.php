@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('thread_reactions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('thread_id');
+            $table->boolean('is_liking');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('thread_id')->references('id')->on('threads');
         });
     }
 

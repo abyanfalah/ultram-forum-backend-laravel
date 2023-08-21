@@ -33,4 +33,15 @@ class Post extends Model
     {
         return $this->hasMany(PostReaction::class);
     }
+
+    public function getReactionsCount()
+    {
+        $likes = $this->postReactions()->where('is_liking', true)->count();
+        $dislikes = $this->postReactions()->where('is_liking', false)->count();
+
+        return [
+            "likes" => $likes,
+            "dislikes" => $dislikes,
+        ];
+    }
 }

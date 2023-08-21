@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreThreadReactionRequest;
 use App\Http\Requests\UpdateThreadReactionRequest;
+use App\Models\Thread;
 use App\Models\ThreadReaction;
 
 class ThreadReactionController extends Controller
@@ -16,20 +17,40 @@ class ThreadReactionController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreThreadReactionRequest $request)
     {
-        //
+        $userId = auth()->user()->id;
+        $threadId = $request->threadId;
+        $isLiking = $request->isLiking;
+
+        $thread = Thread::find($threadId);
+
+        // find existing reaction.
+        $existingReaction =
+            ThreadReaction
+            ::where('user_id', $userId)
+            ->where('thread_id', $threadId)->first();
+
+        // if not found store this new one
+        if (!$existingReaction) {
+            $reaction = new ThreadReaction;
+            $reaction->user_id = $userId;
+            $reaction->thread_id = $threadId;
+            $reaction->is_liking = $isLiking;
+            $reaction->save();
+            return $thread->getReactionsCount();
+        }
+
+        // if found, cancel if same.
+        if ($existingReaction->is_liking == $isLiking) {
+            $existingReaction->delete();
+            return $thread->getReactionsCount();
+        }
+
+        // else, renew it.
+        $existingReaction->is_liking = $isLiking;
+        $existingReaction->save();
+        return $thread->getReactionsCount();
     }
 
     /**
@@ -37,8 +58,14 @@ class ThreadReactionController extends Controller
      */
     public function show(ThreadReaction $threadReaction)
     {
-        //
     }
+
+    public function showByThread(Thread $thread)
+    {
+        return $thread->getReactionsCount();
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.

@@ -38,8 +38,6 @@ class PostController extends Controller
         $post->parent_post_id = $request->parentPostId;
         $post->content = $request->content;
         $post->user_id = auth()->user()->id;
-        $post->likes = 0;
-        $post->dislikes = 0;
         $post->save();
 
         return $post;

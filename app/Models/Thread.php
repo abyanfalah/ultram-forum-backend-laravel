@@ -10,12 +10,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use stdClass;
 
 class Thread extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $hidden = ['created_at', 'updated_at'];
 
     protected $with = [
         'threadReactions',
@@ -49,5 +51,22 @@ class Thread extends Model
     public function threadReactions(): HasMany
     {
         return $this->hasMany(ThreadReaction::class);
+    }
+
+    public function getReactionsCount()
+    {
+        $likes = $this->threadReactions()->where('is_liking', true)->count();
+        $dislikes = $this->threadReactions()->where('is_liking', false)->count();
+        $isReactedByUser = $this->threadReactions()->where('user_id', auth()->user()->id)->first();
+
+        $result = new stdClass;
+        $result->likes = $likes;
+        $result->dislikes = $dislikes;
+
+        if ($isReactedByUser) {
+            $result->userReaction = $isReactedByUser->is_liking;
+        }
+
+        return $result;
     }
 }

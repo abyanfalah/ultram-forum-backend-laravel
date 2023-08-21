@@ -4,8 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ThreadController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostReactionController;
+use App\Http\Controllers\ThreadReactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,5 +81,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         // Route::post('/', [CategoryController::class, 'store'])->middleware('role:superAdmin');
         // Route::put('/{category}', [CategoryController::class, 'update']);
         // Route::delete('/{category}', [CategoryController::class, 'destroy']);
+    });
+
+    // reaction
+    Route::prefix('react')->group(function () {
+        Route::get('/thread/{thread}', [ThreadReactionController::class, 'showByThread']);
+        Route::post('/thread', [ThreadReactionController::class, 'store']);
+
+        Route::get('/{post}', [PostReactionController::class, 'show']);
+        Route::post('/post', [PostReactionController::class, 'store']);
     });
 });
