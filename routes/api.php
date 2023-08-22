@@ -71,6 +71,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::get('/user/{user}', [PostController::class, 'showByUser']);
 
+        Route::get('/thread/{thread}/parent', [PostController::class, 'showParentByThread']);
         Route::get('/thread/{thread}', [PostController::class, 'showByThread']);
     });
 

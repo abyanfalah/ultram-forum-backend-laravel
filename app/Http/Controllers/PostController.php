@@ -61,6 +61,11 @@ class PostController extends Controller
         return $thread->posts()->get();
     }
 
+    public function showParentByThread(Thread $thread)
+    {
+        return $thread->parentPosts()->get();
+    }
+
 
     /**
      * Show the form for editing the specified resource.

@@ -68,4 +68,11 @@ class Thread extends Model
 
         return $result;
     }
+
+    public function parentPosts()
+    {
+        return Post
+            ::where('thread_id', $this->id)
+            ->where('parent_post_id', null);
+    }
 }

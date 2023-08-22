@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use stdClass;
+use App\Models\Post;
 use App\Models\User;
 use App\Models\Thread;
 use App\Models\PostReaction;
@@ -9,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use stdClass;
 
 class Post extends Model
 {
@@ -18,8 +19,9 @@ class Post extends Model
     protected $guarded = ['id'];
 
     protected $with = [
-        'postReactions',
         'user',
+        'postReactions',
+        'postReplies',
     ];
 
     public function thread(): BelongsTo
@@ -35,6 +37,16 @@ class Post extends Model
     public function postReactions(): HasMany
     {
         return $this->hasMany(PostReaction::class);
+    }
+
+    public function parentPost(): BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'parent_post_id');
+    }
+
+    public function postReplies(): HasMany
+    {
+        return $this->hasMany(Post::class, 'parent_post_id');
     }
 
     public function getReactionsCount()
