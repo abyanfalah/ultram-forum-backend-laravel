@@ -31,6 +31,7 @@ class ThreadReactionController extends Controller
             ::where('user_id', $userId)
             ->where('thread_id', $threadId)->first();
 
+
         // if not found store this new one
         if (!$existingReaction) {
             $reaction = new ThreadReaction;

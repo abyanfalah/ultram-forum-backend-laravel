@@ -88,7 +88,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/thread/{thread}', [ThreadReactionController::class, 'showByThread']);
         Route::post('/thread', [ThreadReactionController::class, 'store']);
 
-        Route::get('/{post}', [PostReactionController::class, 'show']);
+        Route::get('/post/{post}', [PostReactionController::class, 'showByPost']);
         Route::post('/post', [PostReactionController::class, 'store']);
     });
 });

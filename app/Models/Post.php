@@ -4,10 +4,12 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Thread;
+use App\Models\PostReaction;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use stdClass;
 
 class Post extends Model
 {
@@ -38,10 +40,16 @@ class Post extends Model
     {
         $likes = $this->postReactions()->where('is_liking', true)->count();
         $dislikes = $this->postReactions()->where('is_liking', false)->count();
+        $isReactedByUser = $this->postReactions()->where('user_id', auth()->user()->id)->first();
 
-        return [
-            "likes" => $likes,
-            "dislikes" => $dislikes,
-        ];
+        $result = new stdClass;
+        $result->likes = $likes;
+        $result->dislikes = $dislikes;
+
+        if ($isReactedByUser) {
+            $result->userReaction = $isReactedByUser->is_liking;
+        }
+
+        return $result;
     }
 }
