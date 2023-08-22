@@ -19,6 +19,7 @@ class Post extends Model
 
     protected $with = [
         'postReactions',
+        'user',
     ];
 
     public function thread(): BelongsTo
