@@ -19,11 +19,11 @@ class ThreadReactionController extends Controller
 
     public function store(StoreThreadReactionRequest $request)
     {
+
+
         $userId = auth()->user()->id;
         $threadId = $request->threadId;
         $isLiking = $request->isLiking;
-
-        $thread = Thread::find($threadId);
 
         // find existing reaction.
         $existingReaction =
@@ -31,6 +31,7 @@ class ThreadReactionController extends Controller
             ::where('user_id', $userId)
             ->where('thread_id', $threadId)->first();
 
+        $thread = Thread::find($threadId);
 
         // if not found store this new one
         if (!$existingReaction) {

@@ -19,7 +19,15 @@ class Thread extends Model
     protected $guarded = ['id'];
 
     protected $with = [
-        'threadReactions',
+        // 'threadReactions',
+        // 'likes',
+        'user',
+        'myReaction'
+    ];
+
+    protected $withCount = [
+        'likes',
+        'dislikes',
     ];
 
     public function getRouteKeyName(): string
@@ -54,20 +62,33 @@ class Thread extends Model
 
     public function getReactionsCount()
     {
-        $likes = $this->threadReactions()->where('is_liking', true)->count();
-        $dislikes = $this->threadReactions()->where('is_liking', false)->count();
-        $isReactedByUser = $this->threadReactions()->where('user_id', auth()->user()->id)->first();
+        $likes = $this->hasMany(ThreadReaction::class)->where('is_liking', true)->count();
+        $dislikes = $this->hasMany(ThreadReaction::class)->where('is_liking', false)->count();
 
         $result = new stdClass;
-        $result->likes = $likes;
-        $result->dislikes = $dislikes;
+        $result->likes_count = $likes;
+        $result->dislikes_count = $dislikes;
+        $result->my_reaction = $this->myReaction()->first();
 
-        if ($isReactedByUser) {
-            $result->userReaction = $isReactedByUser->is_liking;
-        }
 
         return $result;
     }
+
+    public function likes()
+    {
+        return $this->hasMany(ThreadReaction::class)->where('is_liking', true);
+    }
+
+    public function dislikes()
+    {
+        return $this->hasMany(ThreadReaction::class)->where('is_liking', false);
+    }
+
+    public function myReaction()
+    {
+        return $this->hasOne(ThreadReaction::class)->where('user_id', auth()->user()->id);
+    }
+
 
     public function parentPosts()
     {
