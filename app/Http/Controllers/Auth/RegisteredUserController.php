@@ -18,24 +18,53 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): Response
+    public function store(Request $request)
     {
+
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            // 'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:' . User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'min:8'],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'name' => $request->username,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        return $user;
 
         event(new Registered($user));
 
         Auth::login($user);
 
         return response()->noContent();
+    }
+
+    public function usernameCheck(Request $request)
+    {
+        $username = $request->username;
+
+        $result = User::where('username', $username)->first();
+
+        if (!$result)
+            return true;
+
+        return false;
+    }
+
+    public function emailCheck(Request $request)
+    {
+        $email = $request->email;
+
+        $result = User::where('email', $email)->first();
+
+        if (!$result)
+            return true;
+
+        return false;
     }
 }
