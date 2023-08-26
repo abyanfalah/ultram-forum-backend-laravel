@@ -12,21 +12,47 @@ class VerifyEmailController extends Controller
 {
     /**
      * Mark the authenticated user's email address as verified.
-     */
-    public function __invoke(EmailVerificationRequest $request): RedirectResponse
+    //  */
+    // public function __invoke(EmailVerificationRequest $request): RedirectResponse
+    // {
+    //     return 'hehe';
+
+    //     if ($request->user()->hasVerifiedEmail()) {
+    //         return redirect()->intended(
+    //             config('app.frontend_url') . RouteServiceProvider::HOME . '?verified=1'
+    //         );
+    //     }
+
+    //     if ($request->user()->markEmailAsVerified()) {
+    //         event(new Verified($request->user()));
+    //     }
+
+    //     return redirect()->intended(
+    //         config('app.frontend_url') . RouteServiceProvider::HOME . '?verified=1'
+    //     );
+    // }
+
+    public function __invoke(EmailVerificationRequest $request)
     {
+
+
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->intended(
-                config('app.frontend_url').RouteServiceProvider::HOME.'?verified=1'
-            );
+            // return redirect()->intended(
+            //     config('app.frontend_url') . RouteServiceProvider::HOME . '?verified=1'
+            // );
+
+            return 'u verified';
         }
 
         if ($request->user()->markEmailAsVerified()) {
+            // return 'u not yet, we gonna do tho';
             event(new Verified($request->user()));
         }
 
+        return 'u verified now, hooray';
+
         return redirect()->intended(
-            config('app.frontend_url').RouteServiceProvider::HOME.'?verified=1'
+            config('app.frontend_url') . RouteServiceProvider::HOME . '?verified=1'
         );
     }
 }

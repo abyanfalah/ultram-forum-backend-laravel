@@ -35,13 +35,13 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return $user;
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return response()->noContent();
+        // return response()->noContent();
+        return $user;
     }
 
     public function usernameCheck(Request $request)
