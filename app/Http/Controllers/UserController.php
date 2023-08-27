@@ -31,6 +31,15 @@ class UserController extends Controller
         //
     }
 
+
+    public function showByUsername($username)
+    {
+        $user = User::where('username', $username)->first();
+        return $user;
+    }
+
+
+
     /**
      * Update the specified resource in storage.
      */
