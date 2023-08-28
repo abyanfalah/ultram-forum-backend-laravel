@@ -22,11 +22,19 @@ class DatabaseSeeder extends Seeder
         Category::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'username' => 'test_user1',
-            'email' => 'test@example.com',
-            'password' => Hash::make('password'),
+            'name' => 'Abyan Falah',
+            'username' => 'abyanf',
+            'email' => 'abyan@gmail.com',
+            'password' => Hash::make('scootermania'),
         ]);
+
+        User::factory()->create([
+            'name' => 'Yafi Gamtina',
+            'username' => 'YafiG',
+            'email' => 'yafi@gmail.com',
+            'password' => Hash::make('scootermania'),
+        ]);
+
 
         // User::factory()
         //     ->has(

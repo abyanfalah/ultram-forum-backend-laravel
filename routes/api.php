@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\PostReactionController;
 use App\Http\Controllers\ThreadReactionController;
 
@@ -92,5 +93,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::get('/post/{post}', [PostReactionController::class, 'showByPost']);
         Route::post('/post', [PostReactionController::class, 'store']);
+    });
+
+    // follow
+    Route::prefix('follow')->group(function () {
+        Route::post('/', [FollowerController::class, 'store']);
     });
 });

@@ -20,6 +20,7 @@ class Post extends Model
     protected $with = [
         'user',
         'postReplies',
+        'myReaction'
     ];
 
     protected $withCount = [

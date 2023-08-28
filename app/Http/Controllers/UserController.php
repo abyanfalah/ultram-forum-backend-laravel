@@ -12,7 +12,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return User::all();
     }
 
     /**
@@ -45,7 +45,16 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            "name" => 'required',
+            // "bio" => 'required',
+        ]);
+
+        $user->name = $request->name;
+        $user->bio = $request->bio;
+        $user->save();
+
+        return $user;
     }
 
     /**
