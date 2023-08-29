@@ -20,22 +20,38 @@ class FollowerController extends Controller
     public function store(StoreFollowerRequest $request)
     {
         $follow = Follower
-            ::where('followee_id', $request->followeeId)
+            ::where('user_id', $request->followeeId)
             ->where('follower_id', auth()->user()->id)
             ->first();
 
-        $followee = User::find($request->followeeId);
 
         if ($follow) {
             $follow->delete();
         } else {
             $follow = new Follower;
+            $follow->user_id = $request->followeeId;
             $follow->follower_id = auth()->user()->id;
-            $follow->followee_id = $followee->id;
             $follow->save();
         }
 
+        $followee = User::find($request->followeeId);
         return $followee;
+
+        // $data = Follower
+        //     ::where('user_id', $followee->id)
+        //     // ->where('')
+        //     ->count();
+
+        // $isFollowed = Follower
+        //     ::where('follower_id', auth()->user()->id)
+        //     ->where('user_id', $followee->id)
+        //     ->first();
+
+        // return [
+        //     "user" => $followee,
+        //     "followerCount" => $data,
+        //     "isFollowed" => $isFollowed ? true : false,
+        // ];
     }
 
 

@@ -33,12 +33,13 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $guarded = ['id'];
 
     protected $with = [
-        // 'isFollowed'
+        'isFollowed'
     ];
 
     protected $withCount = [
         'followees',
         'followers',
+        // 'isFollowed',
     ];
 
     /**
@@ -83,7 +84,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function followers()
     {
-        return $this->hasMany(Follower::class, 'followee_id');
+        return $this->hasMany(Follower::class, 'user_id');
     }
 
     public function followees()
@@ -93,6 +94,18 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isFollowed()
     {
-        return $this->hasOne(Follower::class)->where('follower_id', auth()->user()->id)->first();
+        return $this->hasMany(Follower::class)
+            // ->whereNot('user_id', auth()->user()->id)
+
+            // return $this->hasOne(Follower::class)
+            // ->where('follower_id', auth()->user()->id)
+        ;
+
+        // return false;
+    }
+
+    public function conversation()
+    {
+        return $this->hasMany(Conversation::class, 'user1_id');
     }
 }

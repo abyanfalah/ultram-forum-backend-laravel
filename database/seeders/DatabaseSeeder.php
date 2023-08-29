@@ -35,6 +35,13 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('scootermania'),
         ]);
 
+        User::factory()->create([
+            'name' => 'Ponds',
+            'username' => 'ponds',
+            'email' => 'ponds@gmail.com',
+            'password' => Hash::make('scootermania'),
+        ]);
+
 
         // User::factory()
         //     ->has(

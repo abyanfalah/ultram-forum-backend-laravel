@@ -12,13 +12,13 @@ class Follower extends Model
     use HasFactory;
 
 
-    public function followee(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'followee_id');
-    }
+    // public function user(): BelongsTo
+    // {
+    //     return $this->belongsTo(User::class, 'user_id');
+    // }
 
-    public function follower(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'follower_id');
-    }
+    // public function follower(): BelongsTo
+    // {
+    //     return $this->belongsTo(User::class, 'follower_id');
+    // }
 }
