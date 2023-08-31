@@ -18,10 +18,6 @@ class ConversationController extends Controller
     {
         // DO NOT be goofy and retrieving all conversations!.
         // Only retrieve user's conversations.
-
-        // $userConversations = Conversation::getUserConversations()->get();
-        // return $userConversations;
-
         return Auth::user()->conversations()->get();
     }
 

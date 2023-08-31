@@ -5,9 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ThreadController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\FollowerController;
+use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\PostReactionController;
 use App\Http\Controllers\ThreadReactionController;
 
@@ -101,10 +102,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/', [FollowerController::class, 'store']);
     });
 
-    // follow
+    // conversation
     Route::prefix('conversation')->group(function () {
         Route::get('/', [ConversationController::class, 'index']);
         Route::get('/{conversation}', [ConversationController::class, 'show']);
         Route::post('/', [ConversationController::class, 'store']);
+    });
+
+    // message
+    Route::prefix('message')->group(function () {
+        Route::get('/{conversation}', [MessageController::class, 'index']);
+        // Route::get('/{message}', [MessageController::class, 'show']);
+        Route::post('/', [MessageController::class, 'store']);
     });
 });

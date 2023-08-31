@@ -31,7 +31,6 @@ class Conversation extends Model
 
     public function participants()
     {
-        // return $this->hasMany(ConversationParticipant::class, 'conversation_id');
         return $this->belongsToMany(User::class, 'conversation_participants');
     }
 
@@ -45,7 +44,4 @@ class Conversation extends Model
     {
         return $this->belongsToMany(User::class, 'coonversation_participants');
     }
-
-
-    // i want  to also retrieve the user when getting a conv.
 }
