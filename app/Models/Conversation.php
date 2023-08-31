@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Message;
+use App\Models\ConversationParticipant;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Conversation extends Model
 {
     use HasFactory;
 
     protected $with = [
-        'participants',
+        // 'participants',
         'otherParty',
     ];
 
@@ -28,25 +31,19 @@ class Conversation extends Model
 
     public function participants()
     {
-        return $this->hasMany(ConversationParticipant::class, 'conversation_id');
+        // return $this->hasMany(ConversationParticipant::class, 'conversation_id');
+        return $this->belongsToMany(User::class, 'conversation_participants');
     }
 
     public function otherParty()
     {
-        // return $this->hasMany(ConversationParticipant::class)->whereNot('user_id', auth()->user()->id);
-
-        return $this->hasManyThrough(User::class, ConversationParticipant::class);
+        return $this->belongsToMany(User::class, 'conversation_participants')
+            ->whereNot('users.id', auth()->user()->id);
     }
 
-    public static function getUserConversations()
+    public function users()
     {
-        return Conversation
-            ::whereHas(
-                'participants',
-                function (Builder $query) {
-                    $query->where('user_id', auth()->user()->id);
-                }
-            );
+        return $this->belongsToMany(User::class, 'coonversation_participants');
     }
 
 

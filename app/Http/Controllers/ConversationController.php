@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conversation;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Models\ConversationParticipant;
 use App\Http\Requests\StoreConversationRequest;
 use App\Http\Requests\UpdateConversationRequest;
-use App\Models\Conversation;
-use App\Models\ConversationParticipant;
 
 class ConversationController extends Controller
 {
@@ -16,8 +18,11 @@ class ConversationController extends Controller
     {
         // DO NOT be goofy and retrieving all conversations!.
         // Only retrieve user's conversations.
-        $userConversations = Conversation::getUserConversations()->get();
-        return $userConversations;
+
+        // $userConversations = Conversation::getUserConversations()->get();
+        // return $userConversations;
+
+        return Auth::user()->conversations()->get();
     }
 
     /**
