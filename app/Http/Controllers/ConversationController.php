@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreConversationRequest;
 use App\Http\Requests\UpdateConversationRequest;
 use App\Models\Conversation;
+use App\Models\ConversationParticipant;
 
 class ConversationController extends Controller
 {
@@ -13,7 +14,10 @@ class ConversationController extends Controller
      */
     public function index()
     {
-        //
+        // DO NOT be goofy and retrieving all conversations!.
+        // Only retrieve user's conversations.
+        $userConversations = Conversation::getUserConversations()->get();
+        return $userConversations;
     }
 
     /**
@@ -29,7 +33,25 @@ class ConversationController extends Controller
      */
     public function store(StoreConversationRequest $request)
     {
-        //
+        $conversation = new Conversation;
+        $conversation->save();
+
+        $participantList = [];
+
+
+        // set the participants
+        $participantIdList = $request->participants;
+        foreach ($participantIdList as $participantId) {
+            $participant = new ConversationParticipant;
+            $participant->user_id = $participantId;
+            $participant->conversation_id = $conversation->id;
+            $participant->save();
+            array_push($participantList, $participant);
+        }
+
+        // need to re-retrieve to include eagerloaded prarticipants
+        $conversation = Conversation::find($conversation->id);
+        return $conversation;
     }
 
     /**

@@ -36,7 +36,7 @@ class PostController extends Controller
         $post = new Post;
         $post->thread_id = $request->threadId;
         $post->parent_post_id = $request->parentPostId;
-        $post->content = $request->content;
+        $post->content = trim($request->content);
         $post->user_id = auth()->user()->id;
         $post->save();
 

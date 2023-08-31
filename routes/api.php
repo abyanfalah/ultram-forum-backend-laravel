@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\PostReactionController;
 use App\Http\Controllers\ThreadReactionController;
@@ -98,5 +99,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // follow
     Route::prefix('follow')->group(function () {
         Route::post('/', [FollowerController::class, 'store']);
+    });
+
+    // follow
+    Route::prefix('conversation')->group(function () {
+        Route::get('/', [ConversationController::class, 'index']);
+        Route::get('/{conversation}', [ConversationController::class, 'show']);
+        Route::post('/', [ConversationController::class, 'store']);
     });
 });

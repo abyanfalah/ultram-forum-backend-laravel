@@ -15,18 +15,23 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-	return ['Laravel' => app()->version()];
+    return ['Laravel' => app()->version()];
 });
 
 Route::post('/test', function (Request $request) {
-	return [
-		'request' => 'ddaaang',
-		'msg' => 'OK',
-	];
+    return [
+        'request' => 'ddaaang',
+        'msg' => 'OK',
+    ];
 });
 
-Route::post('/login', function (Request $request) {
-	return $request;
+Route::get('/migrate', function () {
+    Artisan::call('migrate:fresh --seed');
 });
+
+
+// Route::post('/login', function (Request $request) {
+// 	return $request;
+// });
 
 require __DIR__ . '/auth.php';
