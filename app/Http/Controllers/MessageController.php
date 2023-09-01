@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSent;
 use App\Models\Message;
 use App\Models\Conversation;
 use App\Http\Controllers\Controller;
@@ -41,6 +42,7 @@ class MessageController extends Controller
         $message->save();
 
         // trigger event new message
+        event(new MessageSent($message));
 
         return response()->noContent();
     }
