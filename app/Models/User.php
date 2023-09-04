@@ -6,9 +6,12 @@ namespace App\Models;
 use App\Models\Post;
 use App\Models\Thread;
 use App\Models\Follower;
+use App\Models\Conversation;
 use App\Models\PostReaction;
 use App\Models\ThreadReaction;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Auth;
+use App\Models\ConversationParticipant;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -33,12 +36,13 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $guarded = ['id'];
 
     protected $with = [
-        'isFollowed'
+        // 'isFollowed'
     ];
 
+
     protected $withCount = [
-        'followees',
-        'followers',
+        // 'followees',
+        // 'followers',
         // 'isFollowed',
     ];
 
@@ -84,24 +88,18 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function followers()
     {
-        return $this->hasMany(Follower::class, 'user_id');
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
     }
 
     public function followees()
     {
-        return $this->hasMany(Follower::class, 'follower_id');
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
     }
 
     public function isFollowed()
     {
-        return $this->hasMany(Follower::class)
-            // ->whereNot('user_id', auth()->user()->id)
-
-            // return $this->hasOne(Follower::class)
-            // ->where('follower_id', auth()->user()->id)
-        ;
-
-        // return false;
+        return $this->hasMany(Follower::class, 'user_id')
+            ->where('follower_id', auth()->user()->id)->exists();
     }
 
     public function conversationParticipations()
@@ -112,5 +110,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function conversations()
     {
         return $this->belongsToMany(Conversation::class, 'conversation_participants');
+    }
+
+    public function withFollowDetails()
+    {
+        $this->followers_count = $this->followers()->count();
+        $this->followees_count = $this->followees()->count();
+        $this->is_followed = $this->isFollowed();
+        return $this;
     }
 }

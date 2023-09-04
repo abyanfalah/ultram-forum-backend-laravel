@@ -15,7 +15,7 @@ class DisplayNewMessageToUser
     }
 
     /**
-     * Handle the event.
+     * Handle the event.m
      */
     public function handle(MessageSent $event): void
     {

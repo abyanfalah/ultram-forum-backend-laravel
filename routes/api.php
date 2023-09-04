@@ -24,7 +24,9 @@ use App\Http\Controllers\ThreadReactionController;
 */
 
 Route::middleware(['auth:sanctum'])->get('/userdata', function (Request $request) {
-    return $request->user();
+    return $request
+        ->user()
+        ->withFollowDetails();
 });
 
 Route::middleware(['auth:sanctum'])->get('/you-are-authenticated', function (Request $request) {

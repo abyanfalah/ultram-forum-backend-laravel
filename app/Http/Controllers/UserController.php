@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -12,7 +13,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
+        $users = User::all();
+        $users->each(fn ($user) => $user->withFollowDetails());
+        return $users;
     }
 
     /**
@@ -34,7 +37,10 @@ class UserController extends Controller
 
     public function showByUsername($username)
     {
-        $user = User::where('username', $username)->first();
+        $user = User
+            ::where('username', $username)
+            ->first()
+            ->withFollowDetails();
         return $user;
     }
 

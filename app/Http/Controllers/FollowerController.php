@@ -35,23 +35,9 @@ class FollowerController extends Controller
         }
 
         $followee = User::find($request->followeeId);
-        return $followee;
+        // return $followee;
 
-        // $data = Follower
-        //     ::where('user_id', $followee->id)
-        //     // ->where('')
-        //     ->count();
-
-        // $isFollowed = Follower
-        //     ::where('follower_id', auth()->user()->id)
-        //     ->where('user_id', $followee->id)
-        //     ->first();
-
-        // return [
-        //     "user" => $followee,
-        //     "followerCount" => $data,
-        //     "isFollowed" => $isFollowed ? true : false,
-        // ];
+        return $followee->withFollowDetails();
     }
 
 
