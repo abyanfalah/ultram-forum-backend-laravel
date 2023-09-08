@@ -109,6 +109,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/', [ConversationController::class, 'index']);
         Route::get('/{conversation}', [ConversationController::class, 'show']);
         Route::post('/', [ConversationController::class, 'store']);
+        Route::post('/get/by/participants', [ConversationController::class, 'getConversationIdByParticipants']);
     });
 
     // message

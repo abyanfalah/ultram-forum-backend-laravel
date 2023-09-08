@@ -44,4 +44,23 @@ class Conversation extends Model
     {
         return $this->belongsToMany(User::class, 'coonversation_participants');
     }
+
+
+    public static function createNew(array $participantIdList)
+    {
+        $conversation = new Conversation;
+        $conversation->save();
+
+        // set the participants
+        foreach ($participantIdList as $participantId) {
+            $participant = new ConversationParticipant;
+            $participant->user_id = $participantId;
+            $participant->conversation_id = $conversation->id;
+            $participant->save();
+        }
+
+        // need to re-retrieve to include eagerloaded prarticipants
+        $conversation = Conversation::find($conversation->id);
+        return $conversation;
+    }
 }

@@ -42,7 +42,9 @@ class MessageController extends Controller
         $message->save();
 
         // trigger event new message
-        event(new MessageSent($message));
+        // event(new MessageSent($message));
+        broadcast(new MessageSent($message))->toOthers();
+
 
         return response()->noContent();
     }
