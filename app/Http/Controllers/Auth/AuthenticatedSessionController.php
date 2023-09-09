@@ -15,7 +15,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+
         $request->authenticate();
+
+        if (!Auth::check()) return response('Invalid credentials', 400);
 
         $request->session()->regenerate();
 
