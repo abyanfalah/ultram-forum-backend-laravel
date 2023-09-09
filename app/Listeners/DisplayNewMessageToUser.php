@@ -19,6 +19,6 @@ class DisplayNewMessageToUser
      */
     public function handle(MessageSent $event): void
     {
-        info('sent message', [$event->message]);
+        // info('sent message', [$event->message]);
     }
 }

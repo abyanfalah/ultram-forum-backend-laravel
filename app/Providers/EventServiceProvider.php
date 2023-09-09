@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\MessageSent;
+use App\Events\NewCommentSent;
 use App\Listeners\DisplayNewMessageToUser;
+use App\Listeners\ListenNewCommentSent;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -20,11 +22,14 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
         MessageSent::class => [
             DisplayNewMessageToUser::class,
         ], // messaging event & listerner
 
-
+        NewCommentSent::class => [
+            ListenNewCommentSent::class,
+        ], // commenting event & listerner
     ];
 
     /**

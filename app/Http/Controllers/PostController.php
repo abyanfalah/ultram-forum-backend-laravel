@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewCommentSent;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Thread;
@@ -39,6 +40,9 @@ class PostController extends Controller
         $post->content = trim($request->content);
         $post->user_id = auth()->user()->id;
         $post->save();
+
+        // event(new NewCommentSent($post));
+        broadcast(new NewCommentSent($post))->toOthers();
 
         return $post;
     }
