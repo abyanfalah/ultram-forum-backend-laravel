@@ -43,6 +43,11 @@ class Post extends Model
         return $this->hasMany(PostReaction::class);
     }
 
+    public function topParentPost(): BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'top_parent_post_id');
+    }
+
     public function parentPost(): BelongsTo
     {
         return $this->belongsTo(Post::class, 'parent_post_id');
