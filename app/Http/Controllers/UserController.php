@@ -59,7 +59,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->bio = $request->bio;
         $user->save();
-
+        $user->withFollowDetails();
         return $user;
     }
 
