@@ -21,8 +21,6 @@ class ListenNewCommentSent
      */
     public function handle(NewCommentSent $event): void
     {
-        $channelName = "comment-thread-" . $event->post->thread_id;
-
-        info('new comment', [$channelName]);
+        // info('new comment', [$channelName]);
     }
 }
