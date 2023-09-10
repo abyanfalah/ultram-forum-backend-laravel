@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Message;
+use Illuminate\Support\Facades\Auth;
 use App\Models\ConversationParticipant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -42,7 +43,7 @@ class Conversation extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'coonversation_participants');
+        return $this->belongsToMany(User::class, 'conversation_participants');
     }
 
 
@@ -62,5 +63,10 @@ class Conversation extends Model
         // need to re-retrieve to include eagerloaded prarticipants
         $conversation = Conversation::find($conversation->id);
         return $conversation;
+    }
+
+    public function isMyConversation()
+    {
+        return $this->participants()->where('user_id', Auth::id())->exists();
     }
 }
