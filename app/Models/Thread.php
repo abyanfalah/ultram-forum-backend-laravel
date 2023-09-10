@@ -28,6 +28,7 @@ class Thread extends Model
     protected $withCount = [
         'likes',
         'dislikes',
+        'posts',
     ];
 
     public function getRouteKeyName(): string
