@@ -36,7 +36,7 @@ class MessageSent implements ShouldBroadcast
         $channelName = "conversation-" . $this->message->conversation_id;
 
         return [
-            new PrivateChannel($privateChannelName),
+            // new PrivateChannel($privateChannelName),
             new Channel($channelName),
         ];
     }
