@@ -10,6 +10,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\PostReactionController;
+use App\Http\Controllers\SubForumController;
 use App\Http\Controllers\ThreadReactionController;
 
 /*
@@ -117,5 +118,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/{conversation}', [MessageController::class, 'index']);
         // Route::get('/{message}', [MessageController::class, 'show']);
         Route::post('/', [MessageController::class, 'store']);
+    });
+
+    // sub-forum
+    Route::prefix('subforum')->group(function () {
+        Route::get('/', [SubForumController::class, 'index']);
+        Route::get('/{subforum}', [SubForumController::class, 'show']);
+        Route::post('/', [SubForumController::class, 'store']);
+        Route::put('/{subforum}', [SubForumController::class, 'update']);
+        // Route::delete('/{subforum}', [SubForumController::class, 'destroy']);
     });
 });

@@ -52,7 +52,6 @@ class ThreadController extends Controller
         // store to db
         $thread = new Thread;
         $thread->title = trim($request->title);
-        $thread->category_id = $request->categoryId;
         $thread->content = trim($request->content);
         $thread->user_id = auth()->user()->id;
         $thread->slug = trim($slug);

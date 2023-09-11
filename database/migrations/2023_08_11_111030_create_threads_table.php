@@ -16,14 +16,14 @@ return new class extends Migration
             $table->text('title');
             $table->text('content');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('sub_forum_id')->nullable();
             $table->string('slug')->unique();
             // $table->integer('likes')->default(0);
             // $table->integer('dislikes')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('sub_forum_id')->references('id')->on('sub_forums');
         });
     }
 

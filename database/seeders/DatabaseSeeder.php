@@ -19,27 +19,27 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-        Category::factory(10)->create();
+        // Category::factory(10)->create();
 
         User::factory()->create([
             'name' => 'Abyan Falah',
             'username' => 'abyanf',
             'email' => 'abyan@gmail.com',
-            'password' => Hash::make('scootermania'),
+            'password' => '$2y$10$ABhIaKHc3TPUXOKqo7MOiObwbCro6EBO5BSD23r5kb/5mbp9nc6Iq',
         ]);
 
         User::factory()->create([
             'name' => 'Yafi Gamtina',
             'username' => 'YafiG',
             'email' => 'yafi@gmail.com',
-            'password' => Hash::make('scootermania'),
+            'password' => '$2y$10$ABhIaKHc3TPUXOKqo7MOiObwbCro6EBO5BSD23r5kb/5mbp9nc6Iq',
         ]);
 
         User::factory()->create([
             'name' => 'Ponds',
             'username' => 'ponds',
             'email' => 'ponds@gmail.com',
-            'password' => Hash::make('scootermania'),
+            'password' => '$2y$10$ABhIaKHc3TPUXOKqo7MOiObwbCro6EBO5BSD23r5kb/5mbp9nc6Iq',
         ]);
 
 

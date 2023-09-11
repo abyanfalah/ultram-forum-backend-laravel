@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class SubForumModSeeder extends Seeder
+class SubForumMemberSeeder extends Seeder
 {
     /**
      * Run the database seeds.
