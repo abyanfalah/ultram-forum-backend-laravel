@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sub_forum_members', function (Blueprint $table) {
+        Schema::create('sub_forum_mods', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('sub_forum_id');
+            $table->unsignedBigInteger('membership_id');
+            $table->boolean('is_admin');
 
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('sub_forum_id')->references('id')->on('sub_forums');
+            $table->foreign('membership_id')->references('id')->on('sub_forum_members');
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sub_forum_members');
+        Schema::dropIfExists('sub_forum_mods');
     }
 };

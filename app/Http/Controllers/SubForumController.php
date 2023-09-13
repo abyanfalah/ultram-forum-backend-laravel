@@ -13,7 +13,7 @@ class SubForumController extends Controller
      */
     public function index()
     {
-        //
+        return SubForum::all();
     }
 
     /**
@@ -29,7 +29,33 @@ class SubForumController extends Controller
      */
     public function store(StoreSubForumRequest $request)
     {
-        //
+        $request->validate([
+            "name" => "required",
+            "description" => "required",
+            "slug" => "required",
+        ]);
+
+        $slug = $request->slug;
+        $i = 1;
+
+        $isUniqueSlug = false;
+        while ($isUniqueSlug == false) {
+            $foundSlug = SubForum::where('slug', $slug)->first();
+            if (!$foundSlug) {
+                $isUniqueSlug = true;
+            } else {
+                $slug = $request->slug . "_$i";
+                $i++;
+            }
+        }
+
+        $subForum = new SubForum;
+        $subForum->name = $request->name;
+        $subForum->description = $request->description;
+        $subForum->slug = $slug;
+        $subForum->save();
+
+        return $subForum;
     }
 
     /**
@@ -37,7 +63,12 @@ class SubForumController extends Controller
      */
     public function show(SubForum $subForum)
     {
-        //
+        // return 'asdf';
+        return $subForum;
+    }
+
+    public function joinSubForum($subForumId)
+    {
     }
 
     /**
