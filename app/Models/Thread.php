@@ -97,4 +97,9 @@ class Thread extends Model
             ::where('thread_id', $this->id)
             ->where('parent_post_id', null);
     }
+
+    public function subForum(): BelongsTo
+    {
+        return $this->belongsTo(SubForum::class, 'sub_forum_id');
+    }
 }

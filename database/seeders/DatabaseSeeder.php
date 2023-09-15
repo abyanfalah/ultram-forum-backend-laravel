@@ -36,9 +36,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory()->create([
-            'name' => 'Ponds',
-            'username' => 'ponds',
-            'email' => 'ponds@gmail.com',
+            'name' => 'Meiko Whitepaper',
+            'username' => 'meikowhitepaper',
+            'email' => 'meiko@gmail.com',
             'password' => '$2y$10$ABhIaKHc3TPUXOKqo7MOiObwbCro6EBO5BSD23r5kb/5mbp9nc6Iq',
         ]);
 

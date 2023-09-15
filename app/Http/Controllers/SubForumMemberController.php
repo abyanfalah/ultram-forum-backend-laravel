@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SubForumMember;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreSubForumMemberRequest;
 use App\Http\Requests\UpdateSubForumMemberRequest;
-use App\Models\SubForumMember;
+use App\Models\SubForum;
 
 class SubForumMemberController extends Controller
 {
@@ -29,7 +32,24 @@ class SubForumMemberController extends Controller
      */
     public function store(StoreSubForumMemberRequest $request)
     {
-        //
+        $existingMembership = SubForumMember
+            ::where('sub_forum_id', $request->subForumId)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if ($existingMembership) {
+            $existingMembership->delete();
+            // return response('Left subforum', 200);
+            return SubForum::find($request->subForumId)->withJoinDetail();
+        }
+
+        $subForumMember = new SubForumMember;
+        $subForumMember->user_id = Auth::id();
+        $subForumMember->sub_forum_id = $request->subForumId;
+        $subForumMember->save();
+
+        return SubForum::find($request->subForumId)->withJoinDetail();
+        // return response('Joined sub forum', 201);
     }
 
     /**

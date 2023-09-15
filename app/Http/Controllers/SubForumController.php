@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SubForum;
+use App\Models\SubForumMember;
+use App\Http\Controllers\Controller;
+use App\Models\SubForumMod;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreSubForumRequest;
 use App\Http\Requests\UpdateSubForumRequest;
-use App\Models\SubForum;
+use Illuminate\Support\Facades\DB;
 
 class SubForumController extends Controller
 {
@@ -13,7 +18,9 @@ class SubForumController extends Controller
      */
     public function index()
     {
-        return SubForum::all();
+        $subForums =  SubForum::all();
+        $subForums->each(fn ($sub) => $sub->withJoinDetail());
+        return $subForums;
     }
 
     /**
@@ -49,13 +56,33 @@ class SubForumController extends Controller
             }
         }
 
-        $subForum = new SubForum;
-        $subForum->name = $request->name;
-        $subForum->description = $request->description;
-        $subForum->slug = $slug;
-        $subForum->save();
+        try {
+            $subForum = new SubForum;
+            DB::transaction(function () use ($subForum, $request, $slug) {
 
-        return $subForum;
+                // store new sub forum
+                $subForum->name = $request->name;
+                $subForum->description = $request->description;
+                $subForum->slug = $slug;
+                $subForum->save();
+
+                // store current user as the first member
+                $subForumMember = new SubForumMember;
+                $subForumMember->user_id = Auth::id();
+                $subForumMember->sub_forum_id = $subForum->id;
+                $subForumMember->save();
+
+                // store current user as the mod and admin
+                $subForumMod = new SubForumMod;
+                $subForumMod->membership_id = $subForumMember->id;
+                $subForumMod->is_admin = true;
+                $subForumMod->save();
+            });
+
+            return $subForum;
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred while creating the sub-forum'], 500);
+        }
     }
 
     /**
@@ -64,7 +91,7 @@ class SubForumController extends Controller
     public function show(SubForum $subForum)
     {
         // return 'asdf';
-        return $subForum;
+        return $subForum->withJoinDetail();
     }
 
     public function joinSubForum($subForumId)

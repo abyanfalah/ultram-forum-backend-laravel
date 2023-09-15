@@ -7,6 +7,7 @@ use App\Models\Thread;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreThreadRequest;
 use App\Http\Requests\UpdateThreadRequest;
+use App\Models\SubForum;
 
 class ThreadController extends Controller
 {
@@ -54,6 +55,7 @@ class ThreadController extends Controller
         $thread->title = trim($request->title);
         $thread->content = trim($request->content);
         $thread->user_id = auth()->user()->id;
+        $thread->sub_forum_id = $request->subForumId ?? null;
         $thread->slug = trim($slug);
         $thread->save();
 
@@ -66,6 +68,18 @@ class ThreadController extends Controller
     public function show(Thread $thread)
     {
         return $thread;
+    }
+
+    public function showBySubForumId($subForumId)
+    {
+        return [];
+        return 'thread subformum';
+        return SubForum::find($subForumId)->threads()->get();
+    }
+
+    public function showBySubForum(SubForum $subForum)
+    {
+        return $subForum->threads()->get();
     }
 
     public function showByUser(User $user)

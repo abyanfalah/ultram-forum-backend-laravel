@@ -12,6 +12,7 @@ use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PostReactionController;
 use App\Http\Controllers\SubForumController;
+use App\Http\Controllers\SubForumMemberController;
 use App\Http\Controllers\ThreadReactionController;
 use App\Models\SubForumMember;
 
@@ -124,12 +125,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // sub-forum
     Route::prefix('subforum')->group(function () {
-        Route::post('/{subForumId}/join', [SubForumMember::class, 'store']);
+        // Route::get('/{subForumId}/thread', [ThreadController::class, 'showBySubForumId']); // not working bcs God knows why.
+        Route::get('/{subForum}/thread', [ThreadController::class, 'showBySubForum']);
+        Route::post('/join', [SubForumMemberController::class, 'store']);
 
         Route::get('/', [SubForumController::class, 'index']);
-        Route::get('/{subforum}', [SubForumController::class, 'show']);
+        Route::get('/{subForum}', [SubForumController::class, 'show']);
         Route::post('/', [SubForumController::class, 'store']);
-        Route::put('/{subforum}', [SubForumController::class, 'update']);
+        Route::put('/{subForum}', [SubForumController::class, 'update']);
 
 
         // Route::delete('/{subforum}', [SubForumController::class, 'destroy']);
