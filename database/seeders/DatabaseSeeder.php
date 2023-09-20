@@ -21,12 +21,12 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         // Category::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Abyan Falah',
-            'username' => 'abyanf',
-            'email' => 'abyan@gmail.com',
-            'password' => '$2y$10$ABhIaKHc3TPUXOKqo7MOiObwbCro6EBO5BSD23r5kb/5mbp9nc6Iq',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Abyan Falah',
+        //     'username' => 'abyanf',
+        //     'email' => 'abyan@gmail.com',
+        //     'password' => '$2y$10$ABhIaKHc3TPUXOKqo7MOiObwbCro6EBO5BSD23r5kb/5mbp9nc6Iq',
+        // ]);
 
         // User::factory()->create([
         //     'name' => 'Yafi Gamtina',
@@ -35,12 +35,12 @@ class DatabaseSeeder extends Seeder
         //     'password' => '$2y$10$ABhIaKHc3TPUXOKqo7MOiObwbCro6EBO5BSD23r5kb/5mbp9nc6Iq',
         // ]);
 
-        User::factory()->create([
-            'name' => 'Meiko Whitepaper',
-            'username' => 'meikowhitepaper',
-            'email' => 'meiko@gmail.com',
-            'password' => '$2y$10$ABhIaKHc3TPUXOKqo7MOiObwbCro6EBO5BSD23r5kb/5mbp9nc6Iq',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Meiko Whitepaper',
+        //     'username' => 'meikowhitepaper',
+        //     'email' => 'meiko@gmail.com',
+        //     'password' => '$2y$10$ABhIaKHc3TPUXOKqo7MOiObwbCro6EBO5BSD23r5kb/5mbp9nc6Iq',
+        // ]);
 
 
         // User::factory()
