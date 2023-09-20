@@ -147,7 +147,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
         Route::prefix('cover_pic')->group(function () {
+            Route::get('/{user}', [ImageController::class, 'showCoverPicture']);
+            Route::post('/', [ImageController::class, 'setCoverPicture']);
         });
+
         Route::prefix('thread_pic')->group(function () {
         });
     });

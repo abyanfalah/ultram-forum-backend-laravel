@@ -76,6 +76,55 @@ class ImageController extends Controller
         }
     }
 
+
+    public function showCoverPicture(User $user)
+    {
+        $headers = [
+            'Content-Type' => 'image/*',
+        ];
+
+        if ($user->cover_pic == null) {
+            return response()->file(storage_path('app/cover_pic/default.jpg'), $headers);
+        }
+
+        $filePath = storage_path("app/$user->cover_pic");
+        return response()->file($filePath, $headers);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function setCoverPicture(Request $request)
+    {
+        if (!$request->hasFile('image')) {
+            return response('No image is being sent', 400);
+        }
+
+        if (!$request->file('image')->isValid()) {
+            return response('Invalid image', 400);
+        }
+
+        $user = User::find(Auth::id());
+
+        try {
+            $oldCoverPic = $user->cover_pic;
+            if ($oldCoverPic) {
+                Storage::delete($oldCoverPic);
+            }
+
+            $filePath = $request->file('image')->store('cover_pic');
+            $user->cover_pic = $filePath;
+            $user->save();
+
+            return response('cover pic updated', 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => "error updating cover pic",
+                "error" => $e,
+            ], 500);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      */
