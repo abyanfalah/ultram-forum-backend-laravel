@@ -28,12 +28,12 @@ class DatabaseSeeder extends Seeder
             'password' => '$2y$10$ABhIaKHc3TPUXOKqo7MOiObwbCro6EBO5BSD23r5kb/5mbp9nc6Iq',
         ]);
 
-        User::factory()->create([
-            'name' => 'Yafi Gamtina',
-            'username' => 'YafiG',
-            'email' => 'yafi@gmail.com',
-            'password' => '$2y$10$ABhIaKHc3TPUXOKqo7MOiObwbCro6EBO5BSD23r5kb/5mbp9nc6Iq',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Yafi Gamtina',
+        //     'username' => 'YafiG',
+        //     'email' => 'yafi@gmail.com',
+        //     'password' => '$2y$10$ABhIaKHc3TPUXOKqo7MOiObwbCro6EBO5BSD23r5kb/5mbp9nc6Iq',
+        // ]);
 
         User::factory()->create([
             'name' => 'Meiko Whitepaper',

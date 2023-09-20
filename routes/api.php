@@ -133,24 +133,46 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/{subForum}', [SubForumController::class, 'show']);
         Route::post('/', [SubForumController::class, 'store']);
         Route::put('/{subForum}', [SubForumController::class, 'update']);
+    });
 
 
-        // Route::delete('/{subforum}', [SubForumController::class, 'destroy']);
+    // image (gonna figure this stuff later)
+    Route::prefix('image')->group(function () {
+        // Route::get('/', [SubForumController::class, 'index']);
+        // Route::get('/{subforum}', [SubForumController::class, 'show']);
+        Route::prefix('profile_pic')->group(function () {
+            Route::get('/{user}', [ImageController::class, 'showProfilePicture']);
+            Route::post('/', [ImageController::class, 'setProfilePicture']);
+        });
+
+
+        Route::prefix('cover_pic')->group(function () {
+        });
+        Route::prefix('thread_pic')->group(function () {
+        });
     });
 });
 
-// image (gonna figure this stuff later)
-Route::prefix('image')->group(function () {
-    // Route::get('/', [SubForumController::class, 'index']);
-    // Route::get('/{subforum}', [SubForumController::class, 'show']);
-    Route::prefix('profile_pic')->group(function () {
-        Route::get('/{userId}', [ImageController::class, 'showProfilePicture']);
-        Route::post('/{userId}', [ImageController::class, 'setProfilePicture']);
-    });
-
-
-    Route::prefix('cover_pic')->group(function () {
-    });
-    Route::prefix('thread_pic')->group(function () {
-    });
+Route::get("/test", function () {
+    // return response()->file(storage_path('app/profile_pic/default.jpg'));
+    return [
+        "normal" => "app/profile_pic/default.jpg",
+        "spath" => storage_path("app/profile_pic/default.jpg"),
+    ];
 });
+
+// // image (gonna figure this stuff later)
+// Route::prefix('image')->group(function () {
+//     // Route::get('/', [SubForumController::class, 'index']);
+//     // Route::get('/{subforum}', [SubForumController::class, 'show']);
+//     Route::prefix('profile_pic')->group(function () {
+//         Route::get('/{userId}', [ImageController::class, 'showProfilePicture']);
+//         Route::post('/', [ImageController::class, 'setProfilePicture']);
+//     });
+
+
+//     Route::prefix('cover_pic')->group(function () {
+//     });
+//     Route::prefix('thread_pic')->group(function () {
+//     });
+// });

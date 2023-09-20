@@ -4,7 +4,6 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Post;
-use App\Models\User;
 use App\Models\Thread;
 use App\Models\Follower;
 use App\Models\SubForum;
@@ -56,6 +55,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        // 'profile_pic',
+        'cover_pic',
     ];
 
     /**

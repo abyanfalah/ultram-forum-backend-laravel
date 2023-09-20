@@ -38,8 +38,10 @@ class SubForumMemberController extends Controller
             ->first();
 
         if ($existingMembership) {
+            // find the user modship of the subforum.
+            // delete the modship first
+
             $existingMembership->delete();
-            // return response('Left subforum', 200);
             return SubForum::find($request->subForumId)->withJoinDetail();
         }
 
