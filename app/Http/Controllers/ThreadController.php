@@ -16,7 +16,7 @@ class ThreadController extends Controller
      */
     public function index()
     {
-        return Thread::all();
+        return Thread::orderBy('created_at', 'desc')->get();
     }
 
     /**
@@ -33,6 +33,10 @@ class ThreadController extends Controller
     public function store(StoreThreadRequest $request)
     {
         // validation?? later
+        $request->validate([
+            "title" => "required",
+            "content" => "required",
+        ]);
 
 
         $slug = $request->slug;
@@ -72,9 +76,7 @@ class ThreadController extends Controller
 
     public function showBySubForumId($subForumId)
     {
-        return [];
-        return 'thread subformum';
-        return SubForum::find($subForumId)->threads()->get();
+        return 'this function is disabled';
     }
 
     public function showBySubForum(SubForum $subForum)

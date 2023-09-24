@@ -22,7 +22,8 @@ class Thread extends Model
         // 'threadReactions',
         // 'likes',
         'user',
-        'myReaction'
+        'myReaction',
+        'subForum',
     ];
 
     protected $withCount = [

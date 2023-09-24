@@ -125,7 +125,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // sub-forum
     Route::prefix('subforum')->group(function () {
-        // Route::get('/{subForumId}/thread', [ThreadController::class, 'showBySubForumId']); // not working bcs God knows why.
+        Route::get('/joined/{user}', [SubForumController::class, 'showByJoinedUser']);
         Route::get('/{subForum}/thread', [ThreadController::class, 'showBySubForum']);
         Route::post('/join', [SubForumMemberController::class, 'store']);
 

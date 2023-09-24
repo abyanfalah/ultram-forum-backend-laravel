@@ -9,16 +9,18 @@ use App\Models\SubForumMod;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreSubForumRequest;
 use App\Http\Requests\UpdateSubForumRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
 
 class SubForumController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $subForums =  SubForum::all();
+        $subForums =  SubForum::orderBy('created_at', 'desc')->get();
         $subForums->each(fn ($sub) => $sub->withJoinDetail());
         return $subForums;
     }
@@ -90,8 +92,12 @@ class SubForumController extends Controller
      */
     public function show(SubForum $subForum)
     {
-        // return 'asdf';
         return $subForum->withJoinDetail();
+    }
+
+    public function showByJoinedUser(User $user)
+    {
+        return $user->joinedSubForums()->get();
     }
 
     public function joinSubForum($subForumId)
