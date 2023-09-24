@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreSubForumMemberRequest;
 use App\Http\Requests\UpdateSubForumMemberRequest;
 use App\Models\SubForum;
+use App\Models\SubForumMod;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class SubForumMemberController extends Controller
 {
@@ -30,7 +33,7 @@ class SubForumMemberController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSubForumMemberRequest $request)
+    public function toggle(StoreSubForumMemberRequest $request)
     {
         $existingMembership = SubForumMember
             ::where('sub_forum_id', $request->subForumId)
@@ -38,11 +41,26 @@ class SubForumMemberController extends Controller
             ->first();
 
         if ($existingMembership) {
-            // find the user modship of the subforum.
-            // delete the modship first
+            try {
+                DB::transaction(function () use ($existingMembership, $request) {
+                    $modShip = SubForumMod::where('membership_id', $existingMembership->id)->first();
+                    if ($modShip) {
+                        $modShip->delete();
+                    }
 
-            $existingMembership->delete();
-            return SubForum::find($request->subForumId)->withJoinDetail();
+                    $existingMembership->delete();
+
+                    return SubForum::find($request->subForumId)->withJoinDetail();
+                });
+            } catch (Exception $e) {
+                return response()->json(
+                    [
+                        "message" => "error occured when leaving subforum",
+                        "error" => $e
+                    ],
+                    500
+                );
+            }
         }
 
         $subForumMember = new SubForumMember;
@@ -51,7 +69,6 @@ class SubForumMemberController extends Controller
         $subForumMember->save();
 
         return SubForum::find($request->subForumId)->withJoinDetail();
-        // return response('Joined sub forum', 201);
     }
 
     /**
