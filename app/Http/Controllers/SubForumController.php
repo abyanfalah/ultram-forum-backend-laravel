@@ -95,6 +95,11 @@ class SubForumController extends Controller
         return $subForum->withJoinDetail();
     }
 
+    public function showMembers(SubForum $subForum)
+    {
+        return $subForum->members()->get();
+    }
+
     public function showByJoinedUser(User $user)
     {
         return $user->joinedSubForums()->get();
