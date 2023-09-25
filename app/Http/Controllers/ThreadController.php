@@ -63,7 +63,9 @@ class ThreadController extends Controller
         $thread->slug = trim($slug);
         $thread->save();
 
-        return $thread;
+
+
+        return Thread::find($thread->id);
     }
 
     /**
@@ -86,7 +88,7 @@ class ThreadController extends Controller
 
     public function showByUser(User $user)
     {
-        return $user->threads()->get();
+        return $user->threads()->orderBy('created_at', 'desc')->get();
     }
     /**
      * Show the form for editing the specified resource.
