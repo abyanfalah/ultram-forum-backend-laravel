@@ -32,12 +32,19 @@ class MessageSent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         $privateChannelName = "private-conversation-" . $this->message->conversation_id;
-
         $channelName = "conversation-" . $this->message->conversation_id;
 
-        return [
-            // new PrivateChannel($privateChannelName),
+        $otherParties = $this->message->conversation()->first()->otherParty;
+
+        $channels = [
             new Channel($channelName),
         ];
+
+        foreach ($otherParties as $party) {
+            $partyChannelName = "user-$party->id";
+            array_push($channels, new Channel($partyChannelName));
+        }
+
+        return $channels;
     }
 }
