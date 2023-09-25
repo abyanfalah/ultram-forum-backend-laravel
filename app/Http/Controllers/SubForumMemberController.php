@@ -23,14 +23,6 @@ class SubForumMemberController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function toggle(StoreSubForumMemberRequest $request)
@@ -49,9 +41,9 @@ class SubForumMemberController extends Controller
                     }
 
                     $existingMembership->delete();
-
-                    return SubForum::find($request->subForumId)->withJoinDetail();
                 });
+
+                return SubForum::find($request->subForumId)->withJoinDetail();
             } catch (Exception $e) {
                 return response()->json(
                     [
@@ -62,7 +54,6 @@ class SubForumMemberController extends Controller
                 );
             }
         }
-
         $subForumMember = new SubForumMember;
         $subForumMember->user_id = Auth::id();
         $subForumMember->sub_forum_id = $request->subForumId;
@@ -79,13 +70,7 @@ class SubForumMemberController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(SubForumMember $subForumMember)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.

@@ -127,10 +127,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('subforum')->group(function () {
         Route::get('/joined/{user}', [SubForumController::class, 'showByJoinedUser']);
         Route::get('/{subForum}/thread', [ThreadController::class, 'showBySubForum']);
-        Route::post('/join', [SubForumMemberController::class, 'store']);
+        Route::post('/join', [SubForumMemberController::class, 'toggle']);
 
         Route::get('/', [SubForumController::class, 'index']);
         Route::get('/{subForum}', [SubForumController::class, 'show']);
+        Route::get('/{subForum}/member', [SubForumController::class, 'showMembers']);
         Route::post('/', [SubForumController::class, 'store']);
         Route::put('/{subForum}', [SubForumController::class, 'update']);
     });
