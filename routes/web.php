@@ -35,8 +35,6 @@ Route::get('/migrate', function () {
 // 	return $request;
 // });
 
-// test route
-Route::get("/test", function () {
-});
+
 
 require __DIR__ . '/auth.php';
